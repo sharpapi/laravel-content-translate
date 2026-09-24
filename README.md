@@ -54,7 +54,9 @@ $translatedText = $service->translate(
     'casual conversation' // optional context
 );
 
-// $translatedText will contain the translated text as a string
+// translate() returns a status URL; fetchResults() polls until the job is done
+$job = $service->fetchResults($translatedText);
+$translated = $job->result->content;
 ```
 
 ## Parameters
@@ -82,6 +84,19 @@ $translatedText = $service->translate(
         }
     }
 }
+```
+
+## AI agents (Laravel Boost)
+
+This package ships a [Laravel Boost](https://github.com/laravel/boost) skill, `sharpapi-content-translate`. It teaches AI coding agents the async submit-then-`fetchResults()` flow, the queued-job recipe, the result shape and the testing approach. Boost 2 or newer is required. In your app:
+
+```bash
+composer require laravel/boost --dev
+php artisan boost:install          # first time
+php artisan boost:update --discover # already using Boost
+```
+
+Select `sharpapi/laravel-content-translate` when Boost lists the packages it found. The skill loads on demand; no always-on guideline is added.
 
 ## Supported Languages
 
