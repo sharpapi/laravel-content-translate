@@ -37,6 +37,11 @@ class ContentTranslateService extends SharpApiClient
                 'sharpapi-content-translate.api_job_status_polling_wait',
                 180)
         );
+        $this->setUseCustomInterval(
+            (bool) config(
+                'sharpapi-content-translate.api_job_status_use_polling_interval',
+                false)
+        );
         $this->setUserAgent('SharpAPILaravelContentTranslate/1.0.0');
     }
 
@@ -45,10 +50,10 @@ class ContentTranslateService extends SharpApiClient
      * You can set your preferred writing style by providing an optional voice_tone parameter.
      * Additional context can be provided to improve translation quality.
      *
-     * @param string $text The text to translate
-     * @param string $language The target language for translation
-     * @param string|null $voiceTone The tone of voice for the translation (optional)
-     * @param string|null $context Additional context for better translation (optional)
+     * @param  string  $text  The text to translate
+     * @param  string  $language  The target language for translation
+     * @param  string|null  $voiceTone  The tone of voice for the translation (optional)
+     * @param  string|null  $context  Additional context for better translation (optional)
      * @return string The translated text or an error message
      *
      * @throws GuzzleException
